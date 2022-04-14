@@ -8,7 +8,7 @@ import { AccountService } from '../account.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   isLoading = false;
@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
         window.setTimeout(() => {
           this.isLoading = false;
           this.dialogRef.close();
+          this.accountService.login(res.token);
           this.router.navigate([`u/${res.user[0]?._id}`]);
         }, 1500);
       }

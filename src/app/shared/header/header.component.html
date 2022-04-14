@@ -25,7 +25,12 @@
           <a (click)="onRoute('wp')">Scrap Availability</a>
         </li>
         <li class="mr-4 ml-4"><a (click)="onRoute('about')">About</a></li>
-        <li class="mr-4 ml-4"><a (click)="openLoginDialog()">Login</a></li>
+        <li class="mr-4 ml-4" *ngIf="!loginStatus">
+          <a (click)="openLoginDialog()">Login</a>
+        </li>
+        <li class="mr-4 ml-4" *ngIf="loginStatus">
+          <a (click)="logoutUser()">Logout</a>
+        </li>
       </ul>
     </nav>
   </p-sidebar>

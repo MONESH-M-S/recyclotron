@@ -53,8 +53,9 @@ export class SignupComponent implements OnInit {
           summary: 'Success',
           detail: res.message,
         });
+        this.accountService.login(res.token);
         this.isLoading = false;
-        this.router.navigate(['/']);
+        this.router.navigate(['u/' + res.user._id]);
       }
     });
   }

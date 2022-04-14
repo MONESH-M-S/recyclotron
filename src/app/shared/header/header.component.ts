@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/account/account.service';
 import { LoginComponent } from 'src/app/account/login/login.component';
 
 @Component({
@@ -10,10 +11,19 @@ import { LoginComponent } from 'src/app/account/login/login.component';
 })
 export class HeaderComponent implements OnInit {
   visibleSidebar: boolean = false;
+  loginStatus: boolean;
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private accountService: AccountService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.accountService.getLoginStatusUpdated().subscribe((res) => {
+      this.loginStatus = res;
+    });
+  }
 
   onRoute(path: string) {
     this.onNavButtonClick();
@@ -22,6 +32,11 @@ export class HeaderComponent implements OnInit {
 
   onNavButtonClick() {
     this.visibleSidebar = false;
+  }
+
+  logoutUser() {
+    this.accountService.logout();
+    this.router.navigate(['/'])
   }
 
   openLoginDialog() {
