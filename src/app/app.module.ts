@@ -8,6 +8,11 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { HomeAvailableScrapsComponent } from './home/home-available-scraps/home-available-scraps.component';
+import { PrimengModule } from './primeng.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './material.module';
+import { NavbarComponent } from './shared/header/navbar/navbar.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -15,14 +20,19 @@ import { HomeAvailableScrapsComponent } from './home/home-available-scraps/home-
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    HomeAvailableScrapsComponent
+    HomeAvailableScrapsComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PrimengModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [MessageService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
