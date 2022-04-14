@@ -13,6 +13,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { NavbarComponent } from './shared/header/navbar/navbar.component';
 import { MessageService } from 'primeng/api';
+import { LoginComponent } from './account/login/login.component';
+import { SignupComponent } from './account/signup/signup.component';
+import { AccountService } from './account/account.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,8 @@ import { MessageService } from 'primeng/api';
     HomeComponent,
     HomeAvailableScrapsComponent,
     NavbarComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,8 +37,9 @@ import { MessageService } from 'primeng/api';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, AccountService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

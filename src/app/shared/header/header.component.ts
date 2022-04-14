@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LoginComponent } from 'src/app/account/login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -25,12 +26,12 @@ export class HeaderComponent implements OnInit {
 
   openLoginDialog() {
     this.onNavButtonClick();
-    // let dialogRef = this.dialog.open(LoginComponent, {
-    //   width: '400px',
-    //   hasBackdrop: true,
-    //   disableClose: true,
-    // });
+    let dialogRef = this.dialog.open(LoginComponent, {
+      width: '400px',
+      hasBackdrop: true,
+      disableClose: true,
+    });
 
-    // dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

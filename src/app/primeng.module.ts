@@ -11,6 +11,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     TooltipModule,
     TableModule,
     InputSwitchModule,
+    InputMaskModule,
   ],
   exports: [
     SidebarModule,
@@ -40,6 +42,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     TooltipModule,
     TableModule,
     InputSwitchModule,
+    InputMaskModule,
   ],
 })
 export class PrimengModule {}

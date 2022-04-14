@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from 'src/app/account/login/login.component';
 
 @Component({
   selector: 'app-navbar',
@@ -12,11 +13,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {}
 
   openLoginDialog() {
-    // let dialogRef = this.dialog.open(LoginComponent, {
-    //   width: '400px',
-    //   hasBackdrop: true,
-    //   disableClose: true,
-    // });
-    // dialogRef.afterClosed().subscribe((result) => {});
+    let dialogRef = this.dialog.open(LoginComponent, {
+      width: '400px',
+      hasBackdrop: true,
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }
