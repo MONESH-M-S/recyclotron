@@ -18,6 +18,8 @@ export class AddScrapComponent implements OnInit {
   id: string;
   currentDateTime: string;
   isLoading: boolean = false;
+  editMode: boolean = false;
+  scrapDetail: Scrap;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,10 +31,24 @@ export class AddScrapComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._initForm();
     this.route.params.subscribe((params) => {
       if (params) {
         this.id = params['id'];
+        this.route.queryParams.subscribe((res) => {
+          if (res.edit === 'true') {
+            this._initForm(true);
+            this.editMode = true;
+            this.userService.getScrapDetailById(this.id).subscribe((res) => {
+              if (res.scrap._id) {
+                this.scrapDetail = res.scrap;
+                this._setFormValues();
+              }
+            });
+          } else {
+            this._initForm(false);
+            this.editMode = false;
+          }
+        });
       }
     });
   }
@@ -51,13 +67,22 @@ export class AddScrapComponent implements OnInit {
   onSubmit() {
     this.isLoading = true;
 
+    if (this.form.invalid) return;
+
     this.currentDateTime = this.datepipe.transform(
       new Date(),
       'dd/MM/yyyy h:mm'
     );
 
-    if (this.form.invalid) return;
+    console.log(this.editMode);
+    if (this.editMode) {
+      this._updateForm();
+    } else {
+      this._submitForm();
+    }
+  }
 
+  private _submitForm() {
     const f = this.form.value;
     const scrapForm = new FormData();
     scrapForm.append('product', f.product),
@@ -70,8 +95,6 @@ export class AddScrapComponent implements OnInit {
       scrapForm.append('image', f.image),
       scrapForm.append('createdAt', this.currentDateTime),
       scrapForm.append('creator', this.id),
-
-      
       this.userService.addNewScrap(scrapForm).subscribe((res) => {
         if (res.scrap != null) {
           this.messageService.add({
@@ -81,7 +104,7 @@ export class AddScrapComponent implements OnInit {
           });
           window.setTimeout(() => {
             this.isLoading = false;
-            this.router.navigate([`u/${this.id}`]);
+            this.router.navigate([`u/${res.scrap.creator}`]);
           }, 3000);
         } else {
           this.messageService.add({
@@ -94,16 +117,83 @@ export class AddScrapComponent implements OnInit {
       });
   }
 
-  private _initForm() {
-    this.form = this.formBuilder.group({
-      product: ['', [Validators.required]],
-      quantity: ['', [Validators.required]],
-      scrapProducedTime: ['', [Validators.required]],
-      utilizableTime: ['', [Validators.required]],
-      transportationOptions: ['', [Validators.required]],
-      location: ['', [Validators.required]],
-      processParameter: ['', [Validators.required]],
-      image: ['', [Validators.required]],
-    });
+  private _updateForm() {
+    const f = this.form.value;
+    const scrapForm = {
+      product: f.product,
+      quantity: f.quantity,
+      scrapProducedTime: f.scrapProducedTime,
+      utilizableTime: f.utilizableTime,
+      transportationAvailable: f.transportationOptions,
+      location: f.location,
+      scrapProcessingDescription: f.processParameter,
+      createdAt: this.currentDateTime,
+    };
+    this.userService
+      .updateScrapFromUser(scrapForm, this.id)
+      .subscribe((res) => {
+        if (res.scrap != null) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: res.message,
+          });
+          window.setTimeout(() => {
+            this.isLoading = false;
+            this.router.navigate([`u/${res.scrap.creator}`]);
+          }, 3000);
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: res.message,
+          });
+          this.isLoading = false;
+        }
+      });
+  }
+
+  private _initForm(edit: boolean) {
+    if (edit) {
+      this.form = this.formBuilder.group({
+        product: ['', [Validators.required]],
+        quantity: ['', [Validators.required]],
+        scrapProducedTime: ['', [Validators.required]],
+        utilizableTime: ['', [Validators.required]],
+        transportationOptions: ['', [Validators.required]],
+        location: ['', [Validators.required]],
+        processParameter: ['', [Validators.required]],
+      });
+    } else {
+      this.form = this.formBuilder.group({
+        product: ['', [Validators.required]],
+        quantity: ['', [Validators.required]],
+        scrapProducedTime: ['', [Validators.required]],
+        utilizableTime: ['', [Validators.required]],
+        transportationOptions: ['', [Validators.required]],
+        location: ['', [Validators.required]],
+        processParameter: ['', [Validators.required]],
+        image: ['', [Validators.required]],
+      });
+    }
+  }
+
+  private _setFormValues() {
+    this.form.get('product').setValue(this.scrapDetail.product);
+    this.form.get('quantity').setValue(this.scrapDetail.quantity);
+    this.form
+      .get('scrapProducedTime')
+      .setValue(new Date(this.scrapDetail.scrapProducedTime));
+    this.form
+      .get('utilizableTime')
+      .setValue(new Date(this.scrapDetail.utilizableTime));
+    this.form
+      .get('transportationOptions')
+      .setValue(this.scrapDetail.transportationAvailable);
+    this.form.get('location').setValue(this.scrapDetail.location);
+    this.form
+      .get('processParameter')
+      .setValue(this.scrapDetail.scrapProcessingDescription);
+    this.imageDisplay = this.scrapDetail.image;
   }
 }

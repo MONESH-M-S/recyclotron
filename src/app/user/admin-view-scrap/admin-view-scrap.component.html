@@ -1,12 +1,12 @@
 <h2 class="mt-5 font-semibold" *ngIf="!isScrapAvailable">
-  No Scraps Added By You!
+  No Scrap available, All are Done!
 </h2>
 <h2 class="mt-5 font-semibold" *ngIf="isScrapAvailable">
-  Scraps Added by you,
+  Scraps need to be View,
 </h2>
 <div class="card mt-3" *ngIf="isScrapAvailable">
   <p-table
-    [value]="userAddedScraps"
+    [value]="enteredScraps"
     responsiveLayout="scroll"
     [scrollable]="true"
     scrollHeight="350px"
@@ -16,29 +16,40 @@
         <th pSortableColumn="product">
           Product <p-sortIcon field="product"></p-sortIcon>
         </th>
-        <th>Quantity</th>
-        <th>Location</th>
+        <th pSortableColumn="quantity">
+          Quantity <p-sortIcon field="quantity"></p-sortIcon>
+        </th>
+        <th pSortableColumn="location">
+          Location <p-sortIcon field="location"></p-sortIcon>
+        </th>
         <th pSortableColumn="createdAt">
           Created At <p-sortIcon field="createdAt"></p-sortIcon>
         </th>
         <th></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-scrap>
+    <ng-template pTemplate="body" let-product>
       <tr>
-        <td>{{ scrap.product | titlecase }}</td>
-        <td>{{ scrap.quantity | titlecase }}</td>
-        <td>{{ scrap.location | titlecase }}</td>
-        <td>{{ scrap.createdAt }}</td>
+        <td>{{ product.product | titlecase }}</td>
+        <td>{{ product.quantity | titlecase }}</td>
+        <td>{{ product.location | titlecase }}</td>
+        <td>{{ product.createdAt }}</td>
         <td>
           <button
             pButton
             pRipple
             type="button"
-            icon="pi pi-pencil"
+            icon="pi pi-eye"
             class="p-button-rounded p-button-success p-button-outlined mr-2"
-            pTooltip="Edit Scrap Details"
-            (click)="userAddedScrap(scrap._id)"
+            (click)="viewScrap(product._id)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-lock-open"
+            class="p-button-rounded p-button-info p-button-outlined mr-2"
+            (click)="openLockScrapConformationDialog(product._id)"
           ></button>
           <button
             pButton
@@ -46,8 +57,7 @@
             type="button"
             icon="pi pi-trash"
             class="p-button-rounded p-button-danger p-button-outlined mr-2"
-            pTooltip="Delete Scrap"
-            (click)="openDeleteDialog(scrap._id)"
+            (click)="openDeleteDialog(product._id)"
           ></button>
         </td>
       </tr>

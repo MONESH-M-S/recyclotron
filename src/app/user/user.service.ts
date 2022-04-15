@@ -12,9 +12,21 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+  getAllScraps() {
+    return this.http.get<{ scraps: Scrap[]; message: string }>(
+      `${this.BACKEND_URL}scrap/`
+    );
+  }
+
   getUserDetailById(id: string) {
     return this.http.get<{ user: User; message: string }>(
       `${this.BACKEND_URL}user/${id}`
+    );
+  }
+
+  getScrapDetailById(id: string) {
+    return this.http.get<{ scrap: Scrap; message: string }>(
+      `${this.BACKEND_URL}scrap/${id}`
     );
   }
 
@@ -28,6 +40,20 @@ export class UserService {
     return this.http.post<{ scrap: Scrap; message: string }>(
       `${this.BACKEND_URL}scrap/`,
       scrapForm
+    );
+  }
+
+  updateScrapFromUser(form: Scrap, id: string) {
+    return this.http.put<{ scrap: Scrap; message: string }>(
+      `${this.BACKEND_URL}scrap/${id}`,
+      form
+    );
+  }
+
+  updateLockConformation(id: string) {
+    return this.http.put<{ scrap: any; message: string }>(
+      `${this.BACKEND_URL}scrap/${id}/lock-status`,
+      id
     );
   }
 

@@ -27,6 +27,8 @@ import { DatePipe } from '@angular/common';
 import { UserService } from './user/user.service';
 import { UserAddedScrapComponent } from './user/user-added-scrap/user-added-scrap.component';
 import { DeleteDialogComponent } from './helper/delete-dialog/delete-dialog.component';
+import { AdminViewScrapComponent } from './user/admin-view-scrap/admin-view-scrap.component';
+import { LockConformationDialogComponent } from './helper/lock-conformation-dialog/lock-conformation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { DeleteDialogComponent } from './helper/delete-dialog/delete-dialog.comp
     AddScrapComponent,
     UserAddedScrapComponent,
     DeleteDialogComponent,
+    AdminViewScrapComponent,
+    LockConformationDialogComponent,
   ],
   imports: [
     BrowserModule,

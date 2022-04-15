@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DeleteDialogComponent } from 'src/app/helper/delete-dialog/delete-dialog.component';
 import { UserService } from '../user.service';
@@ -19,7 +19,8 @@ export class UserAddedScrapComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private dialog: MatDialog,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +34,12 @@ export class UserAddedScrapComponent implements OnInit {
         this.isScrapAvailable = true;
         this.userAddedScraps = res.scraps;
       }
+    });
+  }
+
+  userAddedScrap(id: string) {
+    this.router.navigate(['u/' + id + '/add-s'], {
+      queryParams: { edit: true },
     });
   }
 
