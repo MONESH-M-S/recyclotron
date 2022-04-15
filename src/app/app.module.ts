@@ -29,6 +29,7 @@ import { UserAddedScrapComponent } from './user/user-added-scrap/user-added-scra
 import { DeleteDialogComponent } from './helper/delete-dialog/delete-dialog.component';
 import { AdminViewScrapComponent } from './user/admin-view-scrap/admin-view-scrap.component';
 import { LockConformationDialogComponent } from './helper/lock-conformation-dialog/lock-conformation-dialog.component';
+import { AdminScrapTableComponent } from './user/admin-scrap-table/admin-scrap-table.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { LockConformationDialogComponent } from './helper/lock-conformation-dial
     DeleteDialogComponent,
     AdminViewScrapComponent,
     LockConformationDialogComponent,
+    AdminScrapTableComponent,
   ],
   imports: [
     BrowserModule,

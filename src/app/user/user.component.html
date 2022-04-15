@@ -38,5 +38,5 @@
     </div>
   </div>
   <app-user-added-scrap *ngIf="!userDetail?.isAdmin"></app-user-added-scrap>
-  <app-admin-view-scrap *ngIf="userDetail?.isAdmin"></app-admin-view-scrap>
+  <app-admin-scrap-table *ngIf="userDetail?.isAdmin"></app-admin-scrap-table>
 </section>

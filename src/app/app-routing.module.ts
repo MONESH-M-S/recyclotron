@@ -4,6 +4,7 @@ import { AboutComponent } from './about/about.component';
 import { SignupComponent } from './account/signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { AddScrapComponent } from './user/add-scrap/add-scrap.component';
+import { AdminViewScrapComponent } from './user/admin-view-scrap/admin-view-scrap.component';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'signup', component: SignupComponent },
       { path: ':id', component: UserComponent },
       { path: ':id/add-s', component: AddScrapComponent },
+      { path: 'a/sc/:sid', component: AdminViewScrapComponent },
     ],
   },
   { path: 'about', component: AboutComponent },
