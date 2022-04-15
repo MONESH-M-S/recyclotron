@@ -8,6 +8,7 @@ import { LocalStorageService } from './account/local-storage.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  token: string = '';
   isTokenAvailable: boolean;
 
   constructor(
@@ -16,15 +17,11 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (
-      this.localStorageService.getToken() !== null &&
-      this.localStorageService.getToken() !== undefined
-    ) {
-      this.isTokenAvailable = true;
+    this.token = this.localStorageService.getToken();
+    if (this.token != '') {
       this.accountService.loginStatus.next(true);
     } else {
-      this.isTokenAvailable = false;
-      this.accountService.loginStatus.next(false);
+      this.accountService.logout();
     }
   }
 }

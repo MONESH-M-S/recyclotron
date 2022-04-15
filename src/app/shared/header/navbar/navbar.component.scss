@@ -15,6 +15,13 @@ nav {
           color: #3da35d;
           text-decoration: underline;
         }
+
+      }
+      .logout {
+        &:hover {
+          color: #154223;
+          text-decoration: underline;
+        }
       }
     }
   }

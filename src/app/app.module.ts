@@ -16,9 +16,10 @@ import { MessageService } from 'primeng/api';
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
 import { AccountService } from './account/account.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserComponent } from './user/user.component';
 import { AboutComponent } from './about/about.component';
+import { JwtInterceptor } from './account/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -41,9 +42,13 @@ import { AboutComponent } from './about/about.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [MessageService, AccountService],
+  providers: [
+    MessageService,
+    AccountService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
