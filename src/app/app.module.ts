@@ -21,6 +21,12 @@ import { UserComponent } from './user/user.component';
 import { AboutComponent } from './about/about.component';
 import { JwtInterceptor } from './account/jwt.interceptor';
 import { AddAdminComponent } from './user/add-admin/add-admin.component';
+import { EditMyDetailComponent } from './user/edit-my-detail/edit-my-detail.component';
+import { AddScrapComponent } from './user/add-scrap/add-scrap.component';
+import { DatePipe } from '@angular/common';
+import { UserService } from './user/user.service';
+import { UserAddedScrapComponent } from './user/user-added-scrap/user-added-scrap.component';
+import { DeleteDialogComponent } from './helper/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +41,10 @@ import { AddAdminComponent } from './user/add-admin/add-admin.component';
     UserComponent,
     AboutComponent,
     AddAdminComponent,
+    EditMyDetailComponent,
+    AddScrapComponent,
+    UserAddedScrapComponent,
+    DeleteDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +58,9 @@ import { AddAdminComponent } from './user/add-admin/add-admin.component';
   ],
   providers: [
     MessageService,
+    DatePipe,
     AccountService,
+    UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

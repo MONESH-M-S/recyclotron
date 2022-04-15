@@ -37,6 +37,6 @@
       </button>
     </div>
   </div>
-  <app-user-table *ngIf="!userDetail?.isAdmin"></app-user-table>
+  <app-user-added-scrap *ngIf="!userDetail?.isAdmin"></app-user-added-scrap>
   <app-scrap-view-admin *ngIf="userDetail?.isAdmin"></app-scrap-view-admin>
 </section>

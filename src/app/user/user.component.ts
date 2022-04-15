@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { User } from '../account/user.model';
 import { AddAdminComponent } from './add-admin/add-admin.component';
+import { EditMyDetailComponent } from './edit-my-detail/edit-my-detail.component';
 import { UserService } from './user.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class UserComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -44,9 +46,23 @@ export class UserComponent implements OnInit {
     });
   }
 
-  openEditDetails() {}
+  openEditDetails() {
+    let dialogRef = this.dialog.open(EditMyDetailComponent, {
+      data: {
+        id: this.userId,
+        isAdmin: this.userDetail?.isAdmin,
+      },
+      width: '550px',
+      hasBackdrop: true,
+      disableClose: true,
+    });
 
-  openScrapAvailability() {}
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  openScrapAvailability() {
+    this.router.navigate(['u/' + this.userId + '/add-s']);
+  }
 
   openAddAdminDialog() {
     let dialogRef = this.dialog.open(AddAdminComponent, {
