@@ -20,6 +20,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserComponent } from './user/user.component';
 import { AboutComponent } from './about/about.component';
 import { JwtInterceptor } from './account/jwt.interceptor';
+import { AddAdminComponent } from './user/add-admin/add-admin.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { JwtInterceptor } from './account/jwt.interceptor';
     SignupComponent,
     UserComponent,
     AboutComponent,
+    AddAdminComponent,
   ],
   imports: [
     BrowserModule,

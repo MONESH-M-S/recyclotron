@@ -10,6 +10,7 @@ import { User } from './user.model';
 })
 export class AccountService {
   BACKEND_URL = environment.BACKEND_URL;
+  userId: string = '';
   loginStatus: Subject<boolean> = new Subject<boolean>();
 
   constructor(

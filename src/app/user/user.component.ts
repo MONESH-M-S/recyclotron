@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { User } from '../account/user.model';
+import { AddAdminComponent } from './add-admin/add-admin.component';
 import { UserService } from './user.service';
 
 @Component({
@@ -12,10 +14,12 @@ import { UserService } from './user.service';
 export class UserComponent implements OnInit {
   userDetail: User;
   userId: string;
+
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -24,7 +28,9 @@ export class UserComponent implements OnInit {
         this.userId = params['id'];
         this.userService.getUserDetailById(params['id']).subscribe(
           (res) => {
-            console.log(res);
+            if (res.user != null) {
+              this.userDetail = res.user;
+            }
           },
           (err) => {
             this.messageService.add({
@@ -36,5 +42,19 @@ export class UserComponent implements OnInit {
         );
       }
     });
+  }
+
+  openEditDetails() {}
+
+  openScrapAvailability() {}
+
+  openAddAdminDialog() {
+    let dialogRef = this.dialog.open(AddAdminComponent, {
+      width: '550px',
+      hasBackdrop: true,
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

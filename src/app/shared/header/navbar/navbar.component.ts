@@ -29,6 +29,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  openUserAccount() {
+    this.router.navigate(['u/' + this.accountService.userId]);
+  }
+
   openLoginDialog() {
     let dialogRef = this.dialog.open(LoginComponent, {
       width: '400px',

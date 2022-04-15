@@ -55,6 +55,7 @@ export class SignupComponent implements OnInit {
         });
         this.accountService.login(res.token);
         this.isLoading = false;
+        this.accountService.userId = res.user._id;
         this.router.navigate(['u/' + res.user._id]);
       }
     });

@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
 
   logoutUser() {
     this.accountService.logout();
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
   }
 
   openLoginDialog() {
@@ -48,5 +48,9 @@ export class HeaderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  openUserAccount() {
+    this.router.navigate(['u/' + this.accountService.userId]);
   }
 }
