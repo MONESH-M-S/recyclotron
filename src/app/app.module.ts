@@ -34,6 +34,7 @@ import { ScrapComponent } from './scrap/scrap.component';
 import { ScrapService } from './scrap/scrap.service';
 import { NoScrapComponent } from './helper/no-scrap/no-scrap.component';
 import { ScrapViewComponent } from './scrap/scrap-view/scrap-view.component';
+import { HomeService } from './home/home.service';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { ScrapViewComponent } from './scrap/scrap-view/scrap-view.component';
     DatePipe,
     AccountService,
     UserService,
+    HomeService,
     ScrapService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
