@@ -108,7 +108,7 @@ export class AdminViewScrapComponent implements OnInit {
     };
 
     this.userService.addNewWaste(form).subscribe((res) => {
-      if (res.waste._id) {
+      if (res.waste != null) {
         this.userService
           .updateLockConformation(this.scrapId)
           .subscribe((res) => {
