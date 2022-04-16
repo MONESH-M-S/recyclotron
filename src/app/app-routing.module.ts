@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { SignupComponent } from './account/signup/signup.component';
 import { HomeComponent } from './home/home.component';
+import { ScrapViewComponent } from './scrap/scrap-view/scrap-view.component';
 import { ScrapComponent } from './scrap/scrap.component';
 import { AddScrapComponent } from './user/add-scrap/add-scrap.component';
 import { AdminViewScrapComponent } from './user/admin-view-scrap/admin-view-scrap.component';
@@ -19,7 +20,13 @@ const routes: Routes = [
       { path: 'a/:id/sc/:sid', component: AdminViewScrapComponent },
     ],
   },
-  { path: 'sc', children: [{ path: '', component: ScrapComponent }] },
+  {
+    path: 'sc',
+    children: [
+      { path: '', component: ScrapComponent },
+      { path: ':sid', component: ScrapViewComponent },
+    ],
+  },
   { path: 'about', component: AboutComponent },
   { path: '**', component: HomeComponent },
 ];

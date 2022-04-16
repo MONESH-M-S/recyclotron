@@ -39,6 +39,7 @@
             class="p-button-rounded p-button-help p-button-outlined mr-2"
             pTooltip="Edit Scrap Details"
             (click)="userAddedScrap(scrap._id)"
+            *ngIf="!scrap.isLocked"
           ></button>
           <button
             pButton

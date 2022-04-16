@@ -15,4 +15,10 @@ export class ScrapService {
       `${this.BACKEND_URL}waste/`
     );
   }
+
+  getWasteById(id: string) {
+    return this.http.get<{ waste: Waste; message: string }>(
+      `${this.BACKEND_URL}waste/${id}`
+    );
+  }
 }

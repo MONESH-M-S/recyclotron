@@ -33,6 +33,7 @@ import { AdminScrapTableComponent } from './user/admin-scrap-table/admin-scrap-t
 import { ScrapComponent } from './scrap/scrap.component';
 import { ScrapService } from './scrap/scrap.service';
 import { NoScrapComponent } from './helper/no-scrap/no-scrap.component';
+import { ScrapViewComponent } from './scrap/scrap-view/scrap-view.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { NoScrapComponent } from './helper/no-scrap/no-scrap.component';
     AdminScrapTableComponent,
     ScrapComponent,
     NoScrapComponent,
+    ScrapViewComponent,
   ],
   imports: [
     BrowserModule,
