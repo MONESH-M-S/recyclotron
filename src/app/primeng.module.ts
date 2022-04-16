@@ -13,6 +13,10 @@ import { TableModule } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputMaskModule } from 'primeng/inputmask';
 import { DividerModule } from 'primeng/divider';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { BadgeModule } from 'primeng/badge';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
   imports: [
@@ -29,7 +33,11 @@ import { DividerModule } from 'primeng/divider';
     TableModule,
     InputSwitchModule,
     InputMaskModule,
-    DividerModule
+    DividerModule,
+    MultiSelectModule,
+    BadgeModule,
+    CascadeSelectModule,
+    DataViewModule,
   ],
   exports: [
     SidebarModule,
@@ -45,7 +53,11 @@ import { DividerModule } from 'primeng/divider';
     TableModule,
     InputSwitchModule,
     InputMaskModule,
-    DividerModule
+    DividerModule,
+    MultiSelectModule,
+    BadgeModule,
+    CascadeSelectModule,
+    DataViewModule,
   ],
 })
 export class PrimengModule {}

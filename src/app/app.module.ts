@@ -30,6 +30,9 @@ import { DeleteDialogComponent } from './helper/delete-dialog/delete-dialog.comp
 import { AdminViewScrapComponent } from './user/admin-view-scrap/admin-view-scrap.component';
 import { LockConformationDialogComponent } from './helper/lock-conformation-dialog/lock-conformation-dialog.component';
 import { AdminScrapTableComponent } from './user/admin-scrap-table/admin-scrap-table.component';
+import { ScrapComponent } from './scrap/scrap.component';
+import { ScrapService } from './scrap/scrap.service';
+import { NoScrapComponent } from './helper/no-scrap/no-scrap.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import { AdminScrapTableComponent } from './user/admin-scrap-table/admin-scrap-t
     AdminViewScrapComponent,
     LockConformationDialogComponent,
     AdminScrapTableComponent,
+    ScrapComponent,
+    NoScrapComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +72,7 @@ import { AdminScrapTableComponent } from './user/admin-scrap-table/admin-scrap-t
     DatePipe,
     AccountService,
     UserService,
+    ScrapService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
