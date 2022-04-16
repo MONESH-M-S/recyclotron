@@ -71,7 +71,7 @@ export class AddScrapComponent implements OnInit {
 
     this.currentDateTime = this.datepipe.transform(
       new Date(),
-      'dd/MM/yyyy h:mm'
+      'dd/MM/yyyy h:mm a'
     );
 
     console.log(this.editMode);

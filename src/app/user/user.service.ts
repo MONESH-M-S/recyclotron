@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../account/user.model';
 import { Scrap } from '../scrap.model';
+import { Waste } from '../waste.model';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,13 @@ export class UserService {
     return this.http.post<{ scrap: Scrap; message: string }>(
       `${this.BACKEND_URL}scrap/`,
       scrapForm
+    );
+  }
+
+  addNewWaste(form: Waste) {
+    return this.http.post<{ waste: Waste; message: string }>(
+      `${this.BACKEND_URL}waste/`,
+      form
     );
   }
 

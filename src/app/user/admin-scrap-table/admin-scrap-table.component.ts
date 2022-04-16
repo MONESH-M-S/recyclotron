@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DeleteDialogComponent } from 'src/app/helper/delete-dialog/delete-dialog.component';
 import { LockConformationDialogComponent } from 'src/app/helper/lock-conformation-dialog/lock-conformation-dialog.component';
@@ -13,13 +13,15 @@ import { UserService } from '../user.service';
 })
 export class AdminScrapTableComponent implements OnInit {
   enteredScraps = [];
+  uId: string;
   isScrapAvailable = false;
 
   constructor(
     private userService: UserService,
     private router: Router,
     private dialog: MatDialog,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -35,10 +37,15 @@ export class AdminScrapTableComponent implements OnInit {
         this.isScrapAvailable = true;
       }
     });
+    this.route.params.subscribe((params: any) => {
+      if (params['id']) {
+        this.uId = params['id'];
+      }
+    });
   }
 
   viewScrap(id: string) {
-    this.router.navigate([`u/a/sc/${id}`]);
+    this.router.navigate([`u/a/${this.uId}/sc/${id}`]);
   }
 
   openLockScrapConformationDialog(id: string) {

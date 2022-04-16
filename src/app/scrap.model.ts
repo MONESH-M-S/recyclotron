@@ -1,3 +1,5 @@
+import { User } from "./account/user.model";
+
 export interface Scrap {
   _id?: string;
   product?: string;
@@ -9,6 +11,6 @@ export interface Scrap {
   transportationAvailable?: boolean;
   image?: string;
   createdAt?: string;
-  creator?: string;
+  creator?: string | User;
   isLocked?: boolean;
 }

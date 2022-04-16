@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: 'signup', component: SignupComponent },
       { path: ':id', component: UserComponent },
       { path: ':id/add-s', component: AddScrapComponent },
-      { path: 'a/sc/:sid', component: AdminViewScrapComponent },
+      { path: 'a/:id/sc/:sid', component: AdminViewScrapComponent },
     ],
   },
   { path: 'about', component: AboutComponent },

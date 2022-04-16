@@ -12,6 +12,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputMaskModule } from 'primeng/inputmask';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     TableModule,
     InputSwitchModule,
     InputMaskModule,
+    DividerModule
   ],
   exports: [
     SidebarModule,
@@ -43,6 +45,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     TableModule,
     InputSwitchModule,
     InputMaskModule,
+    DividerModule
   ],
 })
 export class PrimengModule {}
