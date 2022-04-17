@@ -74,7 +74,8 @@ export class ScrapComponent implements OnInit {
     this.wastes = [];
     this.wastesBeforeQuering.forEach((w) => {
       let filter = event.value.split(' ').join('').toLowerCase();
-      if (w.origin === filter) {
+      let wFilter = w.origin.split(' ').join('').toLowerCase();
+      if (wFilter === filter) {
         this.wastes.push(w);
       }
     });
