@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
+import { AdminGuard } from './account/admin.guard';
+import { AuthGuard } from './account/auth.guard';
 import { SignupComponent } from './account/signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { ScrapViewComponent } from './scrap/scrap-view/scrap-view.component';
@@ -15,9 +17,17 @@ const routes: Routes = [
     path: 'u',
     children: [
       { path: 'signup', component: SignupComponent },
-      { path: ':id', component: UserComponent },
-      { path: ':id/add-s', component: AddScrapComponent },
-      { path: 'a/:id/sc/:sid', component: AdminViewScrapComponent },
+      { path: ':id', component: UserComponent, canActivate: [AuthGuard] },
+      {
+        path: ':id/add-s',
+        component: AddScrapComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'a/:id/sc/:sid',
+        component: AdminViewScrapComponent,
+        canActivate: [AdminGuard],
+      },
     ],
   },
   {

@@ -74,7 +74,6 @@ export class AddScrapComponent implements OnInit {
       'dd/MM/yyyy h:mm a'
     );
 
-    console.log(this.editMode);
     if (this.editMode) {
       this._updateForm();
     } else {

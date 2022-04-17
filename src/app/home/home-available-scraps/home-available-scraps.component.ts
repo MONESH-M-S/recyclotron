@@ -17,19 +17,21 @@ export class HomeAvailableScrapsComponent implements OnInit {
     this.homeService.getAllScraps().subscribe((res) => {
       this.availableScraps = res.wastes;
 
-      var holder = {};
-      this.availableScraps.forEach((d) => {
-        if (holder.hasOwnProperty(d.scrapId.location)) {
-          holder[d.scrapId.location] = holder[d.scrapId.location] + 1;
-        } else {
-          holder[d.scrapId.location] = 1;
-        }
-      });
+      if (this.availableScraps != null) {
+        var holder = {};
+        this.availableScraps.forEach((d) => {
+          if (holder.hasOwnProperty(d.scrapId.location)) {
+            holder[d.scrapId.location] = holder[d.scrapId.location] + 1;
+          } else {
+            holder[d.scrapId.location] = 1;
+          }
+        });
 
-      for (var prop in holder) {
-        this.locationScraps.push({ location: prop, count: holder[prop] });
+        for (var prop in holder) {
+          this.locationScraps.push({ location: prop, count: holder[prop] });
+        }
+        this.locationScraps.sort((a, b) => b.count - a.count);
       }
     });
-    this.locationScraps.sort((a, b) => b.count - a.count);
   }
 }
