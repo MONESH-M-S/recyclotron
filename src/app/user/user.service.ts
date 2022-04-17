@@ -59,15 +59,21 @@ export class UserService {
   }
 
   updateLockConformation(id: string) {
-    return this.http.put<{ scrap: any; message: string }>(
+    return this.http.put<{ scrap: Scrap; message: string }>(
       `${this.BACKEND_URL}scrap/${id}/lock-status`,
       id
     );
   }
 
   deleteScrap(id: string) {
-    return this.http.delete<{ scrap: any; message: string }>(
+    return this.http.delete<{ scrap: Scrap; message: string }>(
       `${this.BACKEND_URL}scrap/${id}`
+    );
+  }
+
+  deleteWaste(id: string) {
+    return this.http.delete<{ success: boolean; message: string }>(
+      `${this.BACKEND_URL}waste/scrap-id/${id}`
     );
   }
 }

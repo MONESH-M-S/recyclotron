@@ -9,9 +9,8 @@
             *ngFor="let waste of wastes"
           >
             <div
-              class="surface-card shadow-2 border-rounded p-3 waste-product cursor-pointer"
+              class="surface-card shadow-2 border-rounded p-3 waste-product"
               style="border-radius: 6px"
-              (click)="onProductClicked(waste._id)"
             >
               <img
                 [src]="waste?.scrapId.image"
@@ -23,7 +22,7 @@
                   <div class="text-xl font-medium text-900 mb-2">
                     {{ waste?.scrapId.product | titlecase }}
                   </div>
-                  <p class="mt-0 mb-3 text-600">
+                  <p class="mt-0 mb-1 text-600">
                     {{ waste?.scrapId.createdAt }}
                   </p>
                 </div>
@@ -33,12 +32,13 @@
                   pRipple
                   type="button"
                   icon="pi pi-info-circle"
-                  class="p-button-rounded p-button-danger p-button-text"
+                  class="p-button-rounded p-button-danger p-button-text cursor-pointer"
+                  (click)="onProductClicked(waste._id)"
                 ></button>
               </div>
               <ul class="list-none m-0 p-0">
                 <li
-                  class="px-0 py-2 flex justify-content-between align-items-center border-bottom-1 surface-border"
+                  class="px-0 pb-1 flex justify-content-between align-items-center border-bottom-1 surface-border"
                 >
                   <span class="text-600 font-medium text-sm">
                     {{ waste?.scrapId.quantity }}

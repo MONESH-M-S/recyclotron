@@ -50,11 +50,23 @@ export class UserAddedScrapComponent implements OnInit {
       if (res === 'yes') {
         this.userService.deleteScrap(id).subscribe((res) => {
           if (res.scrap._id) {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: res.message,
-            });
+            if (res.scrap.isLocked === true) {
+              this.userService.deleteWaste(id).subscribe((res) => {
+                if (res.success) {
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: res.message,
+                  });
+                } else {
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: res.message,
+                  });
+                }
+              });
+            }
           } else {
             this.messageService.add({
               severity: 'error',

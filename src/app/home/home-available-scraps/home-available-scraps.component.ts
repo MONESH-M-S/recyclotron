@@ -30,5 +30,6 @@ export class HomeAvailableScrapsComponent implements OnInit {
         this.locationScraps.push({ location: prop, count: holder[prop] });
       }
     });
+    this.locationScraps.sort((a, b) => b.count - a.count);
   }
 }
