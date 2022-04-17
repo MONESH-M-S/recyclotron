@@ -36,49 +36,87 @@ export class AdminViewScrapComponent implements OnInit {
 
   ngOnInit(): void {
     this._initForm();
-    this.route.params.subscribe((params) => {
-      if (params['sid'] && params['id']) {
-        this.scrapId = params['sid'];
-        this.adminId = params['id'];
-        this.userService.getScrapDetailById(params['sid']).subscribe((res) => {
-          if (res.scrap._id) {
-            this.scrapDetail = res.scrap;
-          }
-        });
-        this.userService.getUserDetailById(this.adminId).subscribe((res) => {
-          if (res.user._id) {
-            this.adminDetail = res.user;
-          }
+    this.route.params.subscribe(
+      (params) => {
+        if (params['sid'] && params['id']) {
+          this.scrapId = params['sid'];
+          this.adminId = params['id'];
+          this.userService
+            .getScrapDetailById(params['sid'])
+            .subscribe((res) => {
+              if (res.scrap._id) {
+                this.scrapDetail = res.scrap;
+              }
+            });
+          this.userService.getUserDetailById(this.adminId).subscribe(
+            (res) => {
+              if (res.user._id) {
+                this.adminDetail = res.user;
+              }
+            },
+            (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: err.error.message,
+              });
+            }
+          );
+        }
+      },
+      (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error.message,
         });
       }
-    });
+    );
   }
 
   openDeleteDialog() {
     let dialogRef = this.dialog.open(DeleteDialogComponent);
 
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res === 'yes') {
-        this.userService.deleteScrap(this.scrapId).subscribe((res) => {
-          if (res.scrap._id) {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: res.message,
-            });
-            window.setTimeout(() => {
-              this.router.navigate(['u/' + this.adminId]);
-            }, 2500);
-          } else {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: res.message,
-            });
-          }
+    dialogRef.afterClosed().subscribe(
+      (res) => {
+        if (res === 'yes') {
+          this.userService.deleteScrap(this.scrapId).subscribe(
+            (res) => {
+              if (res.scrap._id) {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: res.message,
+                });
+                window.setTimeout(() => {
+                  this.router.navigate(['u/' + this.adminId]);
+                }, 2500);
+              } else {
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: res.message,
+                });
+              }
+            },
+            (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: err.error.message,
+              });
+            }
+          );
+        }
+      },
+      (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error.message,
         });
       }
-    });
+    );
   }
 
   onSubmit() {
@@ -107,39 +145,48 @@ export class AdminViewScrapComponent implements OnInit {
       createdAt: this.currentDateTime,
     };
 
-    this.userService.addNewWaste(form).subscribe((res) => {
-      if (res.waste != null) {
-        this.userService
-          .updateLockConformation(this.scrapId)
-          .subscribe((res) => {
-            if (res.scrap._id) {
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: res.message,
-              });
-              window.setTimeout(() => {
+    this.userService.addNewWaste(form).subscribe(
+      (res) => {
+        if (res.waste != null) {
+          this.userService
+            .updateLockConformation(this.scrapId)
+            .subscribe((res) => {
+              if (res.scrap._id) {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: res.message,
+                });
+                window.setTimeout(() => {
+                  this.isLoading = false;
+                  this.router.navigate(['u/' + this.adminId]);
+                }, 2500);
+              } else {
                 this.isLoading = false;
-                this.router.navigate(['u/' + this.adminId]);
-              }, 2500);
-            } else {
-              this.isLoading = false;
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Waste uploaded, lock status not updated!',
-              });
-            }
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: 'Waste uploaded, lock status not updated!',
+                });
+              }
+            });
+        } else {
+          this.isLoading = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: res.message,
           });
-      } else {
-        this.isLoading = false;
+        }
+      },
+      (err) => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: res.message,
+          detail: err.error.message,
         });
       }
-    });
+    );
   }
 
   private _initForm() {

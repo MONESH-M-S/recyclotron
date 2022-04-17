@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Waste } from 'src/app/waste.model';
 import { ScrapService } from '../scrap.service';
 
@@ -14,7 +15,8 @@ export class ScrapViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private scrapService: ScrapService
+    private scrapService: ScrapService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -25,6 +27,13 @@ export class ScrapViewComponent implements OnInit {
           this.wasteProduct = res.waste
         });
       }
+    },
+    (err) => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: err.error.message,
+      });
     });
   }
 }

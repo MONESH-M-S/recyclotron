@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { Waste } from '../waste.model';
 import { ScrapService } from './scrap.service';
@@ -22,7 +23,8 @@ export class ScrapComponent implements OnInit {
   constructor(
     private scrapService: ScrapService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +38,15 @@ export class ScrapComponent implements OnInit {
           this.availableFilters.push(w.scrapId);
         });
       }
-    });
+    },
+    (err) => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: err.error.message,
+      });
+    }
+    );
   }
 
   onProductClicked(id: string) {
@@ -72,13 +82,22 @@ export class ScrapComponent implements OnInit {
       return (this.wastes = this.wastesBeforeQuering);
     }
     this.wastes = [];
-    this.wastesBeforeQuering.forEach((w) => {
-      let filter = event.value.split(' ').join('').toLowerCase();
-      let wFilter = w.origin.split(' ').join('').toLowerCase();
-      if (wFilter === filter) {
-        this.wastes.push(w);
+    this.wastesBeforeQuering.forEach(
+      (w) => {
+        let filter = event.value.split(' ').join('').toLowerCase();
+        let wFilter = w.origin.split(' ').join('').toLowerCase();
+        if (wFilter === filter) {
+          this.wastes.push(w);
+        }
+      },
+      (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error.message,
+        });
       }
-    });
+    );
   }
 
   private _searchQuery() {

@@ -29,12 +29,21 @@ export class UserAddedScrapComponent implements OnInit {
         this.id = params['id'];
       }
     });
-    this.userService.getScrapsByCreatorId(this.id).subscribe((res) => {
-      if (res.scraps.length > 0) {
-        this.isScrapAvailable = true;
-        this.userAddedScraps = res.scraps;
+    this.userService.getScrapsByCreatorId(this.id).subscribe(
+      (res) => {
+        if (res.scraps.length > 0) {
+          this.isScrapAvailable = true;
+          this.userAddedScraps = res.scraps;
+        }
+      },
+      (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error.message,
+        });
       }
-    });
+    );
   }
 
   userAddedScrap(id: string) {
@@ -48,41 +57,68 @@ export class UserAddedScrapComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res === 'yes') {
-        this.userService.deleteScrap(id).subscribe((res) => {
-          if (res.scrap._id) {
-            if (res.scrap.isLocked === true) {
-              this.userService.deleteWaste(id).subscribe((res) => {
-                if (res.success) {
-                  this.messageService.add({
-                    severity: 'success',
-                    summary: 'Success',
-                    detail: res.message,
-                  });
-                } else {
-                  this.messageService.add({
-                    severity: 'error',
-                    summary: 'Error',
-                    detail: res.message,
-                  });
-                }
+        this.userService.deleteScrap(id).subscribe(
+          (res) => {
+            if (res.scrap._id) {
+              if (res.scrap.isLocked === true) {
+                this.userService.deleteWaste(id).subscribe(
+                  (res) => {
+                    if (res.success) {
+                      this.messageService.add({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: res.message,
+                      });
+                    } else {
+                      this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: res.message,
+                      });
+                    }
+                  },
+                  (err) => {
+                    this.messageService.add({
+                      severity: 'error',
+                      summary: 'Error',
+                      detail: err.error.message,
+                    });
+                  }
+                );
+              }
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: res.message,
               });
             }
-          } else {
+            this.userService.getScrapsByCreatorId(this.id).subscribe(
+              (res) => {
+                if (res.scraps.length > 0) {
+                  this.isScrapAvailable = true;
+                  this.userAddedScraps = res.scraps;
+                } else {
+                  this.isScrapAvailable = false;
+                }
+              },
+              (err) => {
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: err.error.message,
+                });
+              }
+            );
+          },
+          (err) => {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: res.message,
+              detail: err.error.message,
             });
           }
-          this.userService.getScrapsByCreatorId(this.id).subscribe((res) => {
-            if (res.scraps.length > 0) {
-              this.isScrapAvailable = true;
-              this.userAddedScraps = res.scraps;
-            } else {
-              this.isScrapAvailable = false;
-            }
-          });
-        });
+        );
       }
     });
   }

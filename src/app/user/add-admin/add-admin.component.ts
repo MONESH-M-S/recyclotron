@@ -40,23 +40,32 @@ export class AddAdminComponent implements OnInit {
       isAdmin: true,
     };
 
-    this.accountService.userSignup(addAdminForm).subscribe((res) => {
-      if (res.user === null) {
+    this.accountService.userSignup(addAdminForm).subscribe(
+      (res) => {
+        if (res.user === null) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: res.message,
+          });
+          this.dialogRef.close();
+        } else {
+          this.form.reset();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: res.message,
+          });
+        }
+      },
+      (err) => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: res.message,
-        });
-        this.dialogRef.close();
-      } else {
-        this.form.reset();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: res.message,
+          detail: err.error.message,
         });
       }
-    });
+    );
   }
 
   private _initForm() {

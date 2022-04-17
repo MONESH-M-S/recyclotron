@@ -34,21 +34,39 @@ export class AddScrapComponent implements OnInit {
     this.route.params.subscribe((params) => {
       if (params) {
         this.id = params['id'];
-        this.route.queryParams.subscribe((res) => {
-          if (res.edit === 'true') {
-            this._initForm(true);
-            this.editMode = true;
-            this.userService.getScrapDetailById(this.id).subscribe((res) => {
-              if (res.scrap._id) {
-                this.scrapDetail = res.scrap;
-                this._setFormValues();
-              }
+        this.route.queryParams.subscribe(
+          (res) => {
+            if (res.edit === 'true') {
+              this._initForm(true);
+              this.editMode = true;
+              this.userService.getScrapDetailById(this.id).subscribe(
+                (res) => {
+                  if (res.scrap._id) {
+                    this.scrapDetail = res.scrap;
+                    this._setFormValues();
+                  }
+                },
+                (err) => {
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: err.error.message,
+                  });
+                }
+              );
+            } else {
+              this._initForm(false);
+              this.editMode = false;
+            }
+          },
+          (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: err.error.message,
             });
-          } else {
-            this._initForm(false);
-            this.editMode = false;
           }
-        });
+        );
       }
     });
   }
@@ -94,26 +112,35 @@ export class AddScrapComponent implements OnInit {
       scrapForm.append('image', f.image),
       scrapForm.append('createdAt', this.currentDateTime),
       scrapForm.append('creator', this.id),
-      this.userService.addNewScrap(scrapForm).subscribe((res) => {
-        if (res.scrap != null) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: res.message,
-          });
-          window.setTimeout(() => {
+      this.userService.addNewScrap(scrapForm).subscribe(
+        (res) => {
+          if (res.scrap != null) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: res.message,
+            });
+            window.setTimeout(() => {
+              this.isLoading = false;
+              this.router.navigate([`u/${res.scrap.creator}`]);
+            }, 3000);
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: res.message,
+            });
             this.isLoading = false;
-            this.router.navigate([`u/${res.scrap.creator}`]);
-          }, 3000);
-        } else {
+          }
+        },
+        (err) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: res.message,
+            detail: err.error.message,
           });
-          this.isLoading = false;
         }
-      });
+      );
   }
 
   private _updateForm() {
@@ -128,9 +155,8 @@ export class AddScrapComponent implements OnInit {
       scrapProcessingDescription: f.processParameter,
       createdAt: this.currentDateTime,
     };
-    this.userService
-      .updateScrapFromUser(scrapForm, this.id)
-      .subscribe((res) => {
+    this.userService.updateScrapFromUser(scrapForm, this.id).subscribe(
+      (res) => {
         if (res.scrap != null) {
           this.messageService.add({
             severity: 'success',
@@ -149,7 +175,15 @@ export class AddScrapComponent implements OnInit {
           });
           this.isLoading = false;
         }
-      });
+      },
+      (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error.message,
+        });
+      }
+    );
   }
 
   private _initForm(edit: boolean) {
