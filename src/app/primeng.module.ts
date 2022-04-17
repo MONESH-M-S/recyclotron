@@ -13,8 +13,9 @@ import { TableModule } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputMaskModule } from 'primeng/inputmask';
 import { DividerModule } from 'primeng/divider';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { AccordionModule } from 'primeng/accordion';
+import { CardModule } from 'primeng/card';
+import { ToolbarModule } from 'primeng/toolbar';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   imports: [
@@ -32,8 +33,9 @@ import { AccordionModule } from 'primeng/accordion';
     InputSwitchModule,
     InputMaskModule,
     DividerModule,
-    MultiSelectModule,
-    AccordionModule,
+    CardModule,
+    ToolbarModule,
+    DropdownModule,
   ],
   exports: [
     SidebarModule,
@@ -50,8 +52,9 @@ import { AccordionModule } from 'primeng/accordion';
     InputSwitchModule,
     InputMaskModule,
     DividerModule,
-    MultiSelectModule,
-    AccordionModule,
+    CardModule,
+    ToolbarModule,
+    DropdownModule,
   ],
 })
 export class PrimengModule {}
