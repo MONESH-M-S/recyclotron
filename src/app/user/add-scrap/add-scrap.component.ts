@@ -15,8 +15,8 @@ export class AddScrapComponent implements OnInit {
   transportationOptions = ['Yes', 'No'];
   form: FormGroup;
   imageDisplay: any;
-  id: string;
-  currentDateTime: string;
+  id!: string;
+  currentDateTime!: string;
   isLoading: boolean = false;
   editMode: boolean = false;
   scrapDetail: Scrap;
@@ -101,17 +101,28 @@ export class AddScrapComponent implements OnInit {
 
   private _submitForm() {
     const f = this.form.value;
-    const scrapForm = new FormData();
-    scrapForm.append('product', f.product),
-      scrapForm.append('quantity', f.quantity),
-      scrapForm.append('scrapProducedTime', f.scrapProducedTime),
-      scrapForm.append('utilizableTime', f.utilizableTime),
-      scrapForm.append('transportationAvailable', f.transportationOptions),
-      scrapForm.append('location', f.location),
-      scrapForm.append('scrapProcessingDescription', f.processParameter),
-      scrapForm.append('image', f.image),
-      scrapForm.append('createdAt', this.currentDateTime),
-      scrapForm.append('creator', this.id),
+    // const scrapForm = new FormData();
+    // scrapForm.append('product', f.product),
+    //   scrapForm.append('quantity', f.quantity),
+    //   scrapForm.append('scrapProducedTime', f.scrapProducedTime),
+    //   scrapForm.append('utilizableTime', f.utilizableTime),
+    //   scrapForm.append('transportationAvailable', f.transportationOptions),
+    //   scrapForm.append('location', f.location),
+    //   scrapForm.append('image', f.image),
+    //   scrapForm.append('createdAt', this.currentDateTime),
+    //   scrapForm.append('creator', this.id),
+    const scrapForm = {
+      product: f.product,
+      quantity: f.quantity,
+      scrapProductTime: f.scrapProductTime,
+      utilizable: f.utilizable,
+      transportationOptions: f.transportationOptions,
+      location: f.location,
+      createdAt: this.currentDateTime,
+      creator: this.id
+    }
+
+
       this.userService.addNewScrap(scrapForm).subscribe(
         (res) => {
           if (res.scrap != null) {
@@ -189,24 +200,23 @@ export class AddScrapComponent implements OnInit {
   private _initForm(edit: boolean) {
     if (edit) {
       this.form = this.formBuilder.group({
-        product: ['', [Validators.required]],
-        quantity: ['', [Validators.required]],
-        scrapProducedTime: ['', [Validators.required]],
-        utilizableTime: ['', [Validators.required]],
-        transportationOptions: ['', [Validators.required]],
-        location: ['', [Validators.required]],
-        processParameter: ['', [Validators.required]],
+        product: [''],
+        quantity: [''],
+        scrapProducedTime: [''],
+        utilizableTime: [''],
+        transportationOptions: [''],
+        location: [''],
+        processParameter: [''],
       });
     } else {
       this.form = this.formBuilder.group({
-        product: ['', [Validators.required]],
-        quantity: ['', [Validators.required]],
-        scrapProducedTime: ['', [Validators.required]],
-        utilizableTime: ['', [Validators.required]],
-        transportationOptions: ['', [Validators.required]],
-        location: ['', [Validators.required]],
-        processParameter: ['', [Validators.required]],
-        image: ['', [Validators.required]],
+        product: [''],
+        quantity: [''],
+        scrapProducedTime: [''],
+        utilizableTime: [''],
+        transportationOptions: [''],
+        location: [''],
+        processParameter: ['']
       });
     }
   }

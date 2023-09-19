@@ -37,9 +37,10 @@ export class UserService {
     );
   }
 
-  addNewScrap(scrapForm: FormData) {
+  addNewScrap(scrapForm: any) {
+  // addNewScrap(scrapForm: FormData) {
     return this.http.post<{ scrap: Scrap; message: string }>(
-      `${this.BACKEND_URL}scrap/`,
+      `${this.BACKEND_URL}scrap/add`,
       scrapForm
     );
   }

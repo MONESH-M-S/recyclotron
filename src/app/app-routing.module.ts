@@ -17,16 +17,18 @@ const routes: Routes = [
     path: 'u',
     children: [
       { path: 'signup', component: SignupComponent },
-      { path: ':id', component: UserComponent, canActivate: [AuthGuard] },
+      { path: ':id', component: UserComponent, 
+      // canActivate: [AuthGuard] 
+    },
       {
         path: ':id/add-s',
         component: AddScrapComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
       },
       {
         path: 'a/:id/sc/:sid',
         component: AdminViewScrapComponent,
-        canActivate: [AdminGuard],
+        // canActivate: [AdminGuard],
       },
     ],
   },
